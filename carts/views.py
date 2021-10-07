@@ -1,8 +1,7 @@
 from carts.models import Cart, CartItem
 from store.models import Product
 from django.shortcuts import get_object_or_404, redirect, render
-from django.http import HttpResponse
-
+from django.core.exceptions import ObjectDoesNotExist
 
 # Create your views here.
 
@@ -22,6 +21,7 @@ def add_cart(request, product_id):
     
     product = Product.objects.get(id=product_id)
     try:
+        
         cart = Cart.objects.get(cart_id=_cart_id(request))
     except Cart.DoesNotExist:
         cart = Cart.objects.create(
@@ -71,7 +71,7 @@ def cart(request, total=0,quantity=0,cart_items=None):
             quantity += cart_item.quantity
         tax = (0.002 * total)
         grand_total = total + tax    
-    except ObjectNotExist:
+    except ObjectDoesNotExist:
         pass        
     context = {
         'total': total,
