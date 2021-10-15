@@ -1,6 +1,6 @@
 from django.db import models
 from django.db.models.deletion import CASCADE
-from store.models import Product
+from store.models import Product, variation
 
 # Create your models here.
 
@@ -13,13 +13,14 @@ class Cart(models.Model):
         return self.cart_id
 
 class CartItem(models.Model) :
-    product = models.ForeignKey(Product, on_delete= models.CASCADE)
-    cart    = models.ForeignKey(Cart, on_delete= models.CASCADE)
-    quantity = models.IntegerField()
-    is_active = models.BooleanField(default=True)
+    see         = models.ManyToManyField(variation, blank= True)
+    product     = models.ForeignKey(Product, on_delete= models.CASCADE)
+    cart        = models.ForeignKey(Cart, on_delete= models.CASCADE)
+    quantity    = models.IntegerField()
+    is_active   = models.BooleanField(default=True)
 
     def sub_total(self):
         return self.product.price * self.quantity
 
-    def __str__(self):
+    def __unicode__(self):
         return self.product
