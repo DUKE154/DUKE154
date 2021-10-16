@@ -36,16 +36,13 @@ def add_cart(request, product_id):
         )    
     cart.save()
 
-    is_cart_tem_esist =  CartItem.objects.filter(product = product, cart= cart).exists()    #indicate product is exists
-    if is_cart_tem_esist:
+    is_cart_item_exist =  CartItem.objects.filter(product = product, cart= cart).exists()    #indicate product is exists
+    if is_cart_item_exist:
         cart_item = CartItem.objects.filter(product=product, cart=cart)
-        #existing variation  database
-        #current variation  product_variation
-        # item id      database
         ex_var_list = []
         id = []
         for item in cart_item:
-            exsisting_variation = item.see.all()
+            exsisting_variation = item.see.all()            #refer line 23
             ex_var_list.append(list(exsisting_variation))
 
         print(exsisting_variation)  
@@ -58,7 +55,7 @@ def add_cart(request, product_id):
             item.save()
         else:
             if len(product_variation) > 0:
-                cart_item.see.clear()
+                cart_item.see.clear()                   #refer line 23
                 for item in product_variation:
                     cart_item.see.add(item)
             cart_item.save()
