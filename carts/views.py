@@ -42,7 +42,7 @@ def add_cart(request, product_id):
         ex_var_list = []
         id = []
         for item in cart_item:
-            exsisting_variation = item.see.all()            #refer line 23
+            exsisting_variation = item.see.all()            #refer line 23 for see
             ex_var_list.append(list(exsisting_variation))
 
         print(exsisting_variation)  
@@ -55,7 +55,7 @@ def add_cart(request, product_id):
             item.save()
         else:
             if len(product_variation) > 0:
-                cart_item.see.clear()                   #refer line 23
+                cart_item.see.clear()                   #refer line 23 for see
                 for item in product_variation:
                     cart_item.see.add(item)
             cart_item.save()
